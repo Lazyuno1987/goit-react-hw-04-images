@@ -32,9 +32,9 @@ export default function App() {
     setShowModal(prevState => !prevState);
   };
 
-  const onClose = () => {
-    setLargImg('');
-  };
+  // const onClose = () => {
+  //   setLargImg('');
+  // };
 
   const loadMore = () => {
     setPage(prevState => prevState + 1);
