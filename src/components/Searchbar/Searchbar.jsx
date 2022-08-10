@@ -1,46 +1,39 @@
-import React from 'react';
+// import React from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from './Searchbar.stayled';
 
-export default class Searchbar extends React.Component {
-  state = {
-    name: '',
+
+export default function Searchbar({onSubmit}) {
+  const [name, setName] = useState('')
+  
+ const handleInputChange = event => {
+    setName( event.currentTarget.value.toLowerCase(),
+    );
+  };
+ const reset = () => {
+   setName( '' );
   };
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
-  handleInputChange = event => {
-    this.setState({
-      name: event.currentTarget.value.toLowerCase(),
-    });
-  };
-
-  reset = () => {
-    this.setState({ name: '' });
-  };
-
-  handelSubmit = event => {
+ const handelSubmit = event => {
     event.preventDefault();
-    if (this.state.name.trim() === '') {
+    if (name.trim() === '') {
       toast('Enter something');
       return;
     }
-    this.props.onSubmit(this.state.name);
-    this.reset();
+    onSubmit(name);
+    reset();
     event.target.reset();
   };
-
-  render() {
-    return (
-      <header>
-        <Form onSubmit={this.handelSubmit}>
+  return (
+  <header>
+        <Form onSubmit={handelSubmit}>
           <Input
             type="text"
             autoComplete="off"
             autoFocus
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
             placeholder="Search images and photos"
           />
           <Button type="submit">
@@ -48,6 +41,59 @@ export default class Searchbar extends React.Component {
           </Button>
         </Form>
       </header>
-    );
-  }
+
+)
 }
+
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+// export default class Searchbar extends React.Component {
+//   state = {
+//     name: '',
+//   };
+
+//   static propTypes = {
+//     onSubmit: PropTypes.func.isRequired,
+//   };
+//   handleInputChange = event => {
+//     this.setState({
+//       name: event.currentTarget.value.toLowerCase(),
+//     });
+//   };
+
+//   reset = () => {
+//     this.setState({ name: '' });
+//   };
+
+//   handelSubmit = event => {
+//     event.preventDefault();
+//     if (this.state.name.trim() === '') {
+//       toast('Enter something');
+//       return;
+//     }
+//     this.props.onSubmit(this.state.name);
+//     this.reset();
+//     event.target.reset();
+//   };
+
+//   render() {
+//     return (
+//       <header>
+//         <Form onSubmit={this.handelSubmit}>
+//           <Input
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             onChange={this.handleInputChange}
+//             placeholder="Search images and photos"
+//           />
+//           <Button type="submit">
+//             <span>Search</span>
+//           </Button>
+//         </Form>
+//       </header>
+//     );
+//   }
+// }
